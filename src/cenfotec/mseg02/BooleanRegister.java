@@ -17,8 +17,7 @@ class BooleanRegister {
     private final int feedforwardOffset;
     private Boolean[] storage;
     
-    
-    public BooleanRegister(int regSize, int fbOffset, int ffOffset) {
+    public BooleanRegister(int regSize, int ffOffset, int fbOffset) {
         if( regSize < 3){
             throw new IllegalArgumentException("Register size cannot be less than 3.");
         }
@@ -33,6 +32,7 @@ class BooleanRegister {
         this.registerSize = regSize;
         endIndex = registerSize - 1;
         storage = new Boolean[registerSize];
+        this.initializeEmptyStorage();
         feedbackOffset = fbOffset - 1; //To keep array math you should use zero based offsets.
         feedforwardOffset = ffOffset - 1; //To keep array math you should use zero based offsets.
     }
@@ -80,6 +80,12 @@ class BooleanRegister {
      */
     public Boolean getFeedforwardOffset() {
         return storage[(startIndex + feedforwardOffset) % registerSize];
+    }
+
+    private void initializeEmptyStorage() {
+        for(int i = 0; i < registerSize; ++i){
+            storage[i] = false;
+        }
     }
     
 }
