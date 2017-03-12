@@ -11,9 +11,15 @@ package cenfotec.mseg02;
  */
 class Register {
     private final int registerSize;
-    
+    private int startIndex = 0;
+    private int endIndex = 0;
     public Register(int registerSize) {
+        if( registerSize < 1){
+            throw new IllegalArgumentException("Register size cannot be zero or negative.");
+        }
+        
         this.registerSize = registerSize;
+        endIndex = registerSize - 1;
     }
     
 }
