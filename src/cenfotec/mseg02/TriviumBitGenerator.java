@@ -15,8 +15,15 @@ public class TriviumBitGenerator {
     private final int REG_B_SIZE = 84;
     private final int REG_C_SIZE = 110;
     
-    private BooleanRegister regA = new BooleanRegister(REG_A_SIZE, 66, 69);
-    private BooleanRegister regB = new BooleanRegister(REG_B_SIZE, 68, 77);
-    private BooleanRegister regC = new BooleanRegister(REG_C_SIZE, 65, 86);
+    private final int REG_A_FF_OFFSET = 66;
+    private final int REG_A_FB_OFFSET = 69;
+    private final int REG_B_FF_OFFSET = 68;
+    private final int REG_B_FB_OFFSET = 77;
+    private final int REG_C_FF_OFFSET = 65;
+    private final int REG_C_FB_OFFSET = 86;
+    
+    private BooleanRegister regA = new BooleanRegister(REG_A_SIZE, REG_A_FF_OFFSET, REG_A_FB_OFFSET);
+    private BooleanRegister regB = new BooleanRegister(REG_B_SIZE, REG_B_FF_OFFSET, REG_B_FB_OFFSET);
+    private BooleanRegister regC = new BooleanRegister(REG_C_SIZE, REG_C_FF_OFFSET, REG_C_FB_OFFSET);
     
 }
