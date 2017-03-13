@@ -37,7 +37,7 @@ class BooleanRegister {
         feedforwardOffset = ffOffset - 1; //To keep array math you should use zero based offsets.
     }
     
-    public Boolean shiftAndOutput(){
+    public Boolean shift(){
         Boolean output = this.getOutput();
         this.shiftRight();
         return output;
