@@ -44,16 +44,16 @@ class BooleanRegister {
     }
     
     public void shiftRight(){
-        startIndex = (startIndex - 1 < 0)? registerSize : startIndex -1;
-        endIndex = (endIndex - 1 < 0)? registerSize : endIndex -1;
+        startIndex = (startIndex - 1 < 0)? registerSize-1 : startIndex -1;
+        endIndex = (endIndex - 1 < 0)? registerSize-1 : endIndex -1;
     }
     
     public Boolean getFirstAndInputValue(){
-        return storage[endIndex-1];
+        return storage[endIndex-1 > 0? endIndex-1: registerSize-1];
     }
     
     public Boolean getSecondAndInputValue(){
-        return storage[endIndex-2];
+        return storage[endIndex-2 > 0? endIndex-2: registerSize-2];
     }
 
     public void pushInput(Boolean input){

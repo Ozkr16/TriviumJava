@@ -11,13 +11,15 @@ package cenfotec.mseg02;
  */
 public class TriviumUIMain extends javax.swing.JFrame {
 
+    
+    TriviumController trivium;
     /**
      * Creates new form TriviumUIFrame
      */
     public TriviumUIMain() {
         initComponents();
         
-        TriviumController trivium = new TriviumController();
+        trivium = new TriviumController();
     }
 
     /**
@@ -165,7 +167,10 @@ public class TriviumUIMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void desencriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desencriptarButtonActionPerformed
-        // TODO add your handling code here:
+        String encryptedText = this.textoEncriptadoTextArea.getText();
+        if(encryptedText != null){
+            textPlanoTextArea.setText(trivium.decrypt(encryptedText));
+        }
     }//GEN-LAST:event_desencriptarButtonActionPerformed
 
     private void claveTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_claveTextFieldActionPerformed

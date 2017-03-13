@@ -46,10 +46,11 @@ public class TriviumController {
     }
     
     public String encrypt(String data){
-        return "";
+        return Util.PrintableStringFrom(Util.ConvertStringToBitArray(data));
     }
     
-    public String decrypt(String data){
-        return "";
+    public String decrypt(String encryptedData){
+        
+        return Util.PrintableStringFrom(Util.ConvertStringToBitArray(encryptedData));
     }
 }

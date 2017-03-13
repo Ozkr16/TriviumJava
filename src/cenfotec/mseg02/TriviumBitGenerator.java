@@ -50,7 +50,7 @@ public class TriviumBitGenerator {
             if(REG_A_SIZE - i > KEY_SIZE){
                 regAStorage[i] = false;
             }else{
-                regAStorage[i] = this.keyArray[i - KEY_SIZE];
+                regAStorage[i] = this.keyArray[(REG_A_SIZE - i) % KEY_SIZE];
             }
         }
         regA.setStorage(regAStorage);
@@ -60,7 +60,7 @@ public class TriviumBitGenerator {
             if(REG_B_SIZE - i > IV_SIZE){
                 regBStorage[i] = false;
             }else{
-                regBStorage[i] = this.ivArray[i - IV_SIZE];
+                regBStorage[i] = this.ivArray[(REG_A_SIZE - i) % IV_SIZE];
             }
         }
         regB.setStorage(regBStorage);
@@ -79,19 +79,19 @@ public class TriviumBitGenerator {
     
     public Boolean getNextRandomBit(){
         
-        Boolean regAFinalOutput = Logic.XOR(regA.getOutput(), regA.getFeedforwardOffset());
-        Boolean regBFinalOutput = Logic.XOR(regB.getOutput(), regB.getFeedforwardOffset());
-        Boolean regCFinalOutput = Logic.XOR(regC.getOutput(), regC.getFeedforwardOffset());
+        Boolean regAFinalOutput = Util.XOR(regA.getOutput(), regA.getFeedforwardOffset());
+        Boolean regBFinalOutput = Util.XOR(regB.getOutput(), regB.getFeedforwardOffset());
+        Boolean regCFinalOutput = Util.XOR(regC.getOutput(), regC.getFeedforwardOffset());
         
-        Boolean zOutput = Logic.XOR(Logic.XOR(regAFinalOutput, regBFinalOutput), regCFinalOutput);
+        Boolean zOutput = Util.XOR(Util.XOR(regAFinalOutput, regBFinalOutput), regCFinalOutput);
         
         Boolean regAAndResult = regA.getFirstAndInputValue() && regA.getSecondAndInputValue();
         Boolean regBAndResult = regB.getFirstAndInputValue() && regB.getSecondAndInputValue();
         Boolean regCAndResult = regC.getFirstAndInputValue() && regC.getSecondAndInputValue(); 
         
-        Boolean regBInput = Logic.XOR(Logic.XOR(regAFinalOutput, regAAndResult), regB.getFeedbackOffset());
-        Boolean regCInput = Logic.XOR(Logic.XOR(regBFinalOutput, regBAndResult), regC.getFeedbackOffset());
-        Boolean regAInput = Logic.XOR(Logic.XOR(regCFinalOutput, regCAndResult), regA.getFeedbackOffset());
+        Boolean regBInput = Util.XOR(Util.XOR(regAFinalOutput, regAAndResult), regB.getFeedbackOffset());
+        Boolean regCInput = Util.XOR(Util.XOR(regBFinalOutput, regBAndResult), regC.getFeedbackOffset());
+        Boolean regAInput = Util.XOR(Util.XOR(regCFinalOutput, regCAndResult), regA.getFeedbackOffset());
         
         regA.shift();
         regB.shift();
