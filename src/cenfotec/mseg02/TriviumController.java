@@ -16,18 +16,15 @@ public class TriviumController {
     private Boolean[] keyArray = new Boolean[KEY_SIZE];
     private Boolean[] ivArray = new Boolean[IV_SIZE];
     
+    private TriviumBitGenerator bitGenerator;
+    
     public TriviumController(){
         for(int i = 0; i < KEY_SIZE; ++i ){
             keyArray[i] = false;
             ivArray[i] = false;
         }
-    }
-    
-    /**
-     * @return the keyArray
-     */
-    public Boolean[] getKeyArray() {
-        return keyArray;
+        
+        bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
     }
 
     /**
@@ -38,18 +35,21 @@ public class TriviumController {
     }
 
     /**
-     * @return the ivArray
-     */
-    public Boolean[] getIvArray() {
-        return ivArray;
-    }
-
-    /**
      * @param ivArray the ivArray to set
      */
     public void setIvArray(Boolean[] ivArray) {
         this.ivArray = ivArray;
     }
     
+    public void rebuildBitGenerator(){
+        bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
+    }
     
+    public String encrypt(String data){
+        return "";
+    }
+    
+    public String decrypt(String data){
+        return "";
+    }
 }

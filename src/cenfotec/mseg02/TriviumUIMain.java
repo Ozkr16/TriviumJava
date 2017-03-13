@@ -16,6 +16,8 @@ public class TriviumUIMain extends javax.swing.JFrame {
      */
     public TriviumUIMain() {
         initComponents();
+        
+        TriviumController trivium = new TriviumController();
     }
 
     /**
