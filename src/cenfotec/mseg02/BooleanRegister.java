@@ -87,4 +87,10 @@ class BooleanRegister {
         }
     }
     
+    public void setStorage(Boolean[] data){
+        if(data.length != registerSize){
+            throw new IllegalArgumentException("Data size is different from register size.");
+        }
+        storage = data;
+    }
 }

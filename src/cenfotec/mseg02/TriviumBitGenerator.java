@@ -22,9 +22,9 @@ public class TriviumBitGenerator {
     private final int REG_C_FF_OFFSET = 65;
     private final int REG_C_FB_OFFSET = 86;
     
-    private BooleanRegister regA = new BooleanRegister(REG_A_SIZE, REG_A_FF_OFFSET, REG_A_FB_OFFSET);
-    private BooleanRegister regB = new BooleanRegister(REG_B_SIZE, REG_B_FF_OFFSET, REG_B_FB_OFFSET);
-    private BooleanRegister regC = new BooleanRegister(REG_C_SIZE, REG_C_FF_OFFSET, REG_C_FB_OFFSET);
+    private final BooleanRegister regA = new BooleanRegister(REG_A_SIZE, REG_A_FF_OFFSET, REG_A_FB_OFFSET);
+    private final BooleanRegister regB = new BooleanRegister(REG_B_SIZE, REG_B_FF_OFFSET, REG_B_FB_OFFSET);
+    private final BooleanRegister regC = new BooleanRegister(REG_C_SIZE, REG_C_FF_OFFSET, REG_C_FB_OFFSET);
 
     private final int KEY_SIZE = 80;
     private final int IV_SIZE = 80;
@@ -32,14 +32,7 @@ public class TriviumBitGenerator {
     private Boolean[] keyArray = new Boolean[KEY_SIZE];
     private Boolean[] ivArray = new Boolean[IV_SIZE];
     
-    public TriviumBitGenerator(){
-        for(int i = 0; i < KEY_SIZE; ++i ){
-            keyArray[i] = false;
-        }
-        for(int i = 0; i < IV_SIZE; ++i ){
-            ivArray[i] = false;
-        }
-    }
+    private final int INITIALIZATION_ROUNDS = 1152;
         
     public TriviumBitGenerator(Boolean[] key, Boolean[] iv){
         if(key.length != KEY_SIZE){
@@ -51,6 +44,37 @@ public class TriviumBitGenerator {
         
         this.keyArray = key;
         this.ivArray = iv;
+        
+        Boolean[] regAStorage = new Boolean[REG_A_SIZE];
+        for(int i = 0; i < REG_A_SIZE; ++i){
+            if(REG_A_SIZE - KEY_SIZE > 0){
+                regAStorage[i] = false;
+            }else{
+                regAStorage[i] = this.keyArray[i - KEY_SIZE];
+            }
+        }
+        regA.setStorage(regAStorage);
+        
+        Boolean[] regBStorage = new Boolean[REG_B_SIZE];
+        for(int i = 0; i < REG_B_SIZE; ++i){
+            if(REG_B_SIZE - IV_SIZE > 0){
+                regBStorage[i] = false;
+            }else{
+                regBStorage[i] = this.ivArray[i - IV_SIZE];
+            }
+        }
+        regB.setStorage(regBStorage);
+        
+        Boolean[] regCStorage = new Boolean[REG_C_SIZE];
+        for(int i = 0; i < REG_C_SIZE; ++i){
+            regCStorage[i] = false;
+        }
+        regCStorage[0] = true;
+        regCStorage[1] = true;
+        regCStorage[2] = true;
+        regC.setStorage(regCStorage);
+        
+        warmUpBitGeneratorEngine();
     }
     
     public Boolean getNextRandomBit(){
@@ -74,7 +98,9 @@ public class TriviumBitGenerator {
         Boolean regAInput = Logic.XOR(Logic.XOR(regCFinalOutput, regCAndResult), regA.getFeedbackOffset());
         regA.pushInput(regAInput);
         
-        return true;
+        Boolean outputBit = Logic.XOR(Logic.XOR(regAFinalOutput, regBFinalOutput), regCFinalOutput);
+        
+        return outputBit;
     }
     
     /**
@@ -105,7 +131,9 @@ public class TriviumBitGenerator {
         this.ivArray = ivArray;
     }
     
-    public void WarmUpBitGeneratorEngine(){
-    
+    private void warmUpBitGeneratorEngine(){
+        for(int i = 0; i < INITIALIZATION_ROUNDS; ++i){
+            this.getNextRandomBit(); //Ignore the first rounds to warm up the algorithm.
+        }
     }
 }
