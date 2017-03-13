@@ -27,30 +27,45 @@ public class TriviumController {
         bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
     }
 
-    /**
-     * @param keyArray the keyArray to set
-     */
-    public void setKeyArray(Boolean[] keyArray) {
-        this.keyArray = keyArray;
-    }
-
-    /**
-     * @param ivArray the ivArray to set
-     */
-    public void setIvArray(Boolean[] ivArray) {
-        this.ivArray = ivArray;
-    }
-    
-    public void rebuildBitGenerator(){
+    public TriviumController(String key, String iv){
+        this.keyArray = Util.ConvertStringToBitArray(key);
+        this.ivArray = Util.ConvertStringToBitArray(iv);
         bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
     }
     
+    public void rebuildBitGeneratorWith(String key, String iv){
+        this.keyArray = Util.ConvertStringToBitArray(key);
+        this.ivArray = Util.ConvertStringToBitArray(iv);
+        bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
+    }
+    
+    public String encrypt(String data, String key, String iv){
+        rebuildBitGeneratorWith(key, iv);
+        
+        Boolean[] dataBits = Util.ConvertStringToBitArray(data);
+        for(Boolean bit : dataBits){
+            
+        }
+        return "";
+    }
+    
     public String encrypt(String data){
-        return Util.PrintableStringFrom(Util.ConvertStringToBitArray(data));
+        
+        Boolean[] dataBits = Util.ConvertStringToBitArray(data);
+        Boolean[] encryptedData = new Boolean[dataBits.length];
+        for(int i = 0; i < dataBits.length; i++){
+            encryptedData[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
+        }
+        return Util.ConvertBitArrayToString(encryptedData);
     }
     
     public String decrypt(String encryptedData){
         
+        return Util.PrintableStringFrom(Util.ConvertStringToBitArray(encryptedData));
+    }
+    
+    public String decrypt(String encryptedData, String key, String iv){
+        rebuildBitGeneratorWith(key, iv);
         return Util.PrintableStringFrom(Util.ConvertStringToBitArray(encryptedData));
     }
 }
