@@ -15,7 +15,6 @@
  */
 package cenfotec.mseg02;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.util.Objects;
 
 /**
@@ -23,7 +22,10 @@ import java.util.Objects;
  * @author ozkr16
  */
 public class Util {
-    //Cannot believe Java does not support operator overloading. 
+
+    private final static int LETTER_BIT_WIDTH = 8;
+
+//Cannot believe Java does not support operator overloading. 
     public static Boolean XOR(Boolean A, Boolean B){
         if(A == null || B == null){
             throw new IllegalArgumentException("Null value provided in XOR comparition.");
@@ -57,10 +59,10 @@ public class Util {
         int asciiValue = 0;
         for (boolean item : data) {
             if(item){
-                asciiValue += Math.pow(2, 8 - (index  % 8));
+                asciiValue += Math.pow(2, LETTER_BIT_WIDTH - (index  % LETTER_BIT_WIDTH));
             }
             index++;
-            if(index % 8 == 0){
+            if(index % LETTER_BIT_WIDTH == 0){
                 planeText.append((char)asciiValue);
                 asciiValue = 0;
             }

@@ -66,7 +66,7 @@ public class TriviumController {
         for(int i = 0; i < dataBits.length; i++){
             encryptedData[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
         }
-        return Util.ConvertBitArrayToString(encryptedData);
+        return Util.PrintableStringFrom(encryptedData);
     }
     
     public String decrypt(String encryptedData){
