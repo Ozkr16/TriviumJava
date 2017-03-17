@@ -15,8 +15,9 @@
  */
 package cenfotec.mseg02;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.nio.file.*;
-import sun.dc.pr.PathStroker;
 
 /**
  *
@@ -83,14 +84,16 @@ public class TriviumController {
             byte[] data = Files.readAllBytes(Paths.get(encryptedFilePath));
             
             Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
-            Boolean[] encryptedData = new Boolean[dataBits.length];
+            Boolean[] planeText = new Boolean[dataBits.length];
             for(int i = 0; i < dataBits.length; i++){
-                encryptedData[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
+                planeText[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
             }
             
-            //Files.write(Paths.get(encryptedFilePath + ".plane"), bytes, StandardOpenOption.CREATE);
+            String result = Util.ConvertBitArrayToString(planeText);
+       
+            Files.write(Paths.get(encryptedFilePath + ".plane"), result.getBytes(), StandardOpenOption.CREATE);
             
-            return Util.PrintableStringFrom(encryptedData);
+            return result;
         }catch(Exception ex){
             return ex.toString();
         }
