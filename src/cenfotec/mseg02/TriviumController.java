@@ -15,8 +15,6 @@
  */
 package cenfotec.mseg02;
 
-import java.io.File;
-import java.io.PrintWriter;
 import java.nio.file.*;
 
 /**
