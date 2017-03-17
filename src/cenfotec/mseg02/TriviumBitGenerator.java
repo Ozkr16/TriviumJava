@@ -55,39 +55,69 @@ public class TriviumBitGenerator {
         this.keyArray = key;
         this.ivArray = iv;
         
+        //Register A
         Boolean[] regAStorage = new Boolean[REG_A_SIZE];
         for(int i = 0; i < REG_A_SIZE; ++i){
-            if(REG_A_SIZE - i > KEY_SIZE){
-                regAStorage[i] = false;
+            if(i < IV_SIZE){
+                regAStorage[i] = this.ivArray[i];
             }else{
-                regAStorage[i] = this.keyArray[(REG_A_SIZE - i) % KEY_SIZE];
+                regAStorage[i] = false;
             }
         }
         regA.setStorage(regAStorage);
         
+        //Register B
         Boolean[] regBStorage = new Boolean[REG_B_SIZE];
         for(int i = 0; i < REG_B_SIZE; ++i){
-            if(REG_B_SIZE - i > IV_SIZE){
-                regBStorage[i] = false;
+            if(i < KEY_SIZE){
+                regBStorage[i] = this.keyArray[i];
             }else{
-                regBStorage[i] = this.ivArray[(REG_A_SIZE - i) % IV_SIZE];
+                regBStorage[i] = false;
             }
         }
         regB.setStorage(regBStorage);
         
+        //Register C
         Boolean[] regCStorage = new Boolean[REG_C_SIZE];
         for(int i = 0; i < REG_C_SIZE; ++i){
             regCStorage[i] = false;
         }
-        regCStorage[0] = true;
-        regCStorage[1] = true;
-        regCStorage[2] = true;
+        regCStorage[REG_C_SIZE - 1] = true;
+        regCStorage[REG_C_SIZE - 2] = true;
+        regCStorage[REG_C_SIZE - 3] = true;
         regC.setStorage(regCStorage);
         
         warmUpBitGeneratorEngine();
     }
     
     public Boolean getNextRandomBit(){
+        
+        Boolean regAAndResult = regA.getFirstAndInputValue() && regA.getSecondAndInputValue();
+        Boolean regBAndResult = regB.getFirstAndInputValue() && regB.getSecondAndInputValue();
+        Boolean regCAndResult = regC.getFirstAndInputValue() && regC.getSecondAndInputValue(); 
+        
+        Boolean regAFinalOutput = Util.XOR(Util.XOR(regA.getOutput(), regA.getFeedforwardOffset()), regAAndResult);
+        Boolean regBFinalOutput = Util.XOR(Util.XOR(regB.getOutput(), regB.getFeedforwardOffset()), regBAndResult);
+        Boolean regCFinalOutput = Util.XOR(Util.XOR(regC.getOutput(), regC.getFeedforwardOffset()), regCAndResult);
+        
+        Boolean zOutput = Util.XOR(Util.XOR(regAFinalOutput, regBFinalOutput), regCFinalOutput);
+        
+        Boolean regBInput = Util.XOR(regAFinalOutput, regB.getFeedbackOffset());
+        Boolean regCInput = Util.XOR(regBFinalOutput, regC.getFeedbackOffset());
+        Boolean regAInput = Util.XOR(regCFinalOutput, regA.getFeedbackOffset());
+        
+        regA.shift();
+        regB.shift();
+        regC.shift();
+        
+        regA.pushInput(regAInput);
+        regB.pushInput(regBInput);
+        regC.pushInput(regCInput);
+        
+        return zOutput;
+    }
+    
+        public Boolean getAlternateNextRandomBit(){
         
         Boolean regAFinalOutput = Util.XOR(regA.getOutput(), regA.getFeedforwardOffset());
         Boolean regBFinalOutput = Util.XOR(regB.getOutput(), regB.getFeedforwardOffset());
@@ -113,6 +143,7 @@ public class TriviumBitGenerator {
         
         return zOutput;
     }
+    
     
     /**
      * @return the key
