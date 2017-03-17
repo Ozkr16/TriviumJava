@@ -66,13 +66,13 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setText("Texto Plano");
+        jLabel2.setText("Nombre Texto Plano");
 
         textoEncriptadoTextArea.setColumns(20);
         textoEncriptadoTextArea.setRows(5);
         jScrollPane1.setViewportView(textoEncriptadoTextArea);
 
-        jLabel3.setText("Texto Encriptado");
+        jLabel3.setText("Nombre Texto Encriptado");
 
         textPlanoTextArea.setColumns(20);
         textPlanoTextArea.setRows(5);
@@ -150,7 +150,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(encriptarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,9 +188,9 @@ public class TriviumUIMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void desencriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desencriptarButtonActionPerformed
-        String encryptedText = this.textoEncriptadoTextArea.getText();
-        if(encryptedText != null){
-            textPlanoTextArea.setText(trivium.decrypt(encryptedText));
+        String encryptedTextFilePath = this.textoEncriptadoTextArea.getText();
+        if(encryptedTextFilePath != null){
+            textPlanoTextArea.setText(trivium.decrypt(encryptedTextFilePath, this.claveTextField.getText(), this.IVTextField.getText()));
         }
     }//GEN-LAST:event_desencriptarButtonActionPerformed
 
@@ -199,9 +199,9 @@ public class TriviumUIMain extends javax.swing.JFrame {
     }//GEN-LAST:event_claveTextFieldActionPerformed
 
     private void encriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encriptarButtonActionPerformed
-        String planeText = this.textPlanoTextArea.getText();
-        if(planeText != null){
-            textoEncriptadoTextArea.setText(trivium.encrypt(planeText));
+        String planeTextFilePath = this.textPlanoTextArea.getText();
+        if(planeTextFilePath != null){
+            textoEncriptadoTextArea.setText(trivium.encrypt(planeTextFilePath, this.claveTextField.getText(), this.IVTextField.getText()));
         }
     }//GEN-LAST:event_encriptarButtonActionPerformed
 

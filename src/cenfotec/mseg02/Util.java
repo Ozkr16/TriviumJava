@@ -53,6 +53,25 @@ public class Util {
         return output;
     }
     
+    public static Boolean[] ConvertBytesToBitArray(byte[] bytes){
+        StringBuilder binary = new StringBuilder();
+        for (byte b : bytes) {
+            int val = b;
+            for (int i = 0; i < 8; i++) {
+                binary.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
+            } 
+        }
+        char[] binaryChars = binary.toString().toCharArray();
+        Boolean[] output = new Boolean[binaryChars.length];
+        int index = 0;
+        for (char digit : binaryChars) {
+            output[index] = (digit == '1');
+            ++index;
+        }
+        return output;
+    }
+    
     public static String ConvertBitArrayToString(Boolean[] data){
         int index = 0;
         StringBuilder planeText = new StringBuilder();

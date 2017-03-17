@@ -15,6 +15,9 @@
  */
 package cenfotec.mseg02;
 
+import java.nio.file.*;
+import sun.dc.pr.PathStroker;
+
 /**
  *
  * @author ozkr16
@@ -49,33 +52,47 @@ public class TriviumController {
         bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
     }
     
-    public String encrypt(String data, String key, String iv){
-        rebuildBitGeneratorWith(key, iv);
+    public String encrypt(String planeTextFilePathString, String key, String iv){
         
-        Boolean[] dataBits = Util.ConvertStringToBitArray(data);
-        for(Boolean bit : dataBits){
+        try{
+            rebuildBitGeneratorWith(key, iv);
             
+            Paths.get(planeTextFilePathString);
+            byte[] data = Files.readAllBytes(Paths.get(planeTextFilePathString));
+            
+            Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
+            Boolean[] encryptedData = new Boolean[dataBits.length];
+            for(int i = 0; i < dataBits.length; i++){
+                encryptedData[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
+            }
+            String result = Util.ConvertBitArrayToString(encryptedData);
+            Files.write(Paths.get(planeTextFilePathString + ".encrypted"), result.getBytes(), StandardOpenOption.CREATE);
+            
+            return result;
+        }catch(Exception ex){
+            return ex.toString();
         }
-        return "";
     }
     
-    public String encrypt(String data){
+    public String decrypt(String encryptedFilePath, String key, String iv){
         
-        Boolean[] dataBits = Util.ConvertStringToBitArray(data);
-        Boolean[] encryptedData = new Boolean[dataBits.length];
-        for(int i = 0; i < dataBits.length; i++){
-            encryptedData[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
+           try{
+            rebuildBitGeneratorWith(key, iv);
+            
+            Paths.get(encryptedFilePath);
+            byte[] data = Files.readAllBytes(Paths.get(encryptedFilePath));
+            
+            Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
+            Boolean[] encryptedData = new Boolean[dataBits.length];
+            for(int i = 0; i < dataBits.length; i++){
+                encryptedData[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
+            }
+            
+            //Files.write(Paths.get(encryptedFilePath + ".plane"), bytes, StandardOpenOption.CREATE);
+            
+            return Util.PrintableStringFrom(encryptedData);
+        }catch(Exception ex){
+            return ex.toString();
         }
-        return Util.PrintableStringFrom(encryptedData);
-    }
-    
-    public String decrypt(String encryptedData){
-        
-        return Util.PrintableStringFrom(Util.ConvertStringToBitArray(encryptedData));
-    }
-    
-    public String decrypt(String encryptedData, String key, String iv){
-        rebuildBitGeneratorWith(key, iv);
-        return Util.PrintableStringFrom(Util.ConvertStringToBitArray(encryptedData));
     }
 }
