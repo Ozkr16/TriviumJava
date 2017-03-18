@@ -68,7 +68,7 @@ public class TriviumController {
             byte[] result = Util.ConvertBitArrayToBytes(encryptedData);
             Files.write(Paths.get(filePath + outputFileExtension), result);
             
-            return Files.readAllBytes(Paths.get(filePath)).toString();
+            return new String(result);
         }catch(Exception ex){
             return ex.toString();
         }

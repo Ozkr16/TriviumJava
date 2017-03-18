@@ -48,10 +48,10 @@ public class TriviumUIMain extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        textoEncriptadoTextArea = new javax.swing.JTextArea();
+        resultadoTextArea = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        textPlanoTextArea = new javax.swing.JTextArea();
+        rutaTextArea = new javax.swing.JTextArea();
         encriptarButton = new javax.swing.JButton();
         desencriptarButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -70,17 +70,17 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setText("Nombre Texto Plano");
+        jLabel2.setText("Ruta archivo a procesar:");
 
-        textoEncriptadoTextArea.setColumns(20);
-        textoEncriptadoTextArea.setRows(5);
-        jScrollPane1.setViewportView(textoEncriptadoTextArea);
+        resultadoTextArea.setColumns(20);
+        resultadoTextArea.setRows(5);
+        jScrollPane1.setViewportView(resultadoTextArea);
 
-        jLabel3.setText("Nombre Texto Encriptado");
+        jLabel3.setText("Resultado:");
 
-        textPlanoTextArea.setColumns(20);
-        textPlanoTextArea.setRows(5);
-        jScrollPane2.setViewportView(textPlanoTextArea);
+        rutaTextArea.setColumns(20);
+        rutaTextArea.setRows(1);
+        jScrollPane2.setViewportView(rutaTextArea);
 
         encriptarButton.setText("Encriptar");
         encriptarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -127,28 +127,29 @@ public class TriviumUIMain extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(claveTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(IVTextField))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(encriptarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(desencriptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
-                            .addComponent(bitsToBinaryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addComponent(claveTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(IVTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(261, 261, 261)
+                        .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(encriptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(bitsToBinaryButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(desencriptarButton))
+                        .addComponent(jScrollPane1)))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,18 +165,16 @@ public class TriviumUIMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(encriptarButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bitsToBinaryButton)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(encriptarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bitsToBinaryButton)
+                        .addComponent(desencriptarButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(desencriptarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,8 +184,8 @@ public class TriviumUIMain extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -196,17 +195,17 @@ public class TriviumUIMain extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(93, 93, 93))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void desencriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desencriptarButtonActionPerformed
-        String encryptedTextFilePath = this.textoEncriptadoTextArea.getText();
+        String encryptedTextFilePath = this.rutaTextArea.getText();
         if(encryptedTextFilePath != null){
             String textoPlano = trivium.decrypt(encryptedTextFilePath, this.claveTextField.getText(), this.IVTextField.getText(), ".plane.txt");
-            textPlanoTextArea.setText(textoPlano);
+            resultadoTextArea.setText(textoPlano);
         }
     }//GEN-LAST:event_desencriptarButtonActionPerformed
 
@@ -215,10 +214,10 @@ public class TriviumUIMain extends javax.swing.JFrame {
     }//GEN-LAST:event_claveTextFieldActionPerformed
 
     private void encriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encriptarButtonActionPerformed
-        String planeTextFilePath = this.textPlanoTextArea.getText();
+        String planeTextFilePath = this.rutaTextArea.getText();
         if(planeTextFilePath != null){
             String textoEncryptado = trivium.encrypt(planeTextFilePath, this.claveTextField.getText(), this.IVTextField.getText(), ".encrypted.txt");
-            textoEncriptadoTextArea.setText(textoEncryptado);
+            resultadoTextArea.setText(textoEncryptado);
         }
     }//GEN-LAST:event_encriptarButtonActionPerformed
 
@@ -229,7 +228,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
     private void bitsToBinaryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitsToBinaryButtonActionPerformed
         try{
-            String planeTextFilePath = this.textPlanoTextArea.getText();
+            String planeTextFilePath = this.rutaTextArea.getText();
             if(planeTextFilePath != null){
                 Paths.get(planeTextFilePath);
                 byte[] data = Files.readAllBytes(Paths.get(planeTextFilePath));
@@ -243,11 +242,10 @@ public class TriviumUIMain extends javax.swing.JFrame {
                 byte[] textoEncryptado = Util.ConvertBitArrayToBytes(oneZeroArray);
                 
                 Files.write(Paths.get(planeTextFilePath + ".binary.txt"), textoEncryptado);
-                String textoVisible = Files.readAllBytes(Paths.get(planeTextFilePath + ".binary.txt")).toString();
-                textoEncriptadoTextArea.setText(textoVisible);
+                resultadoTextArea.setText(new String(textoEncryptado));
             }
         }catch(Exception ex){
-            textoEncriptadoTextArea.setText(ex.toString());
+            resultadoTextArea.setText(ex.toString());
         }
     }//GEN-LAST:event_bitsToBinaryButtonActionPerformed
 
@@ -302,7 +300,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton resetButton;
-    private javax.swing.JTextArea textPlanoTextArea;
-    private javax.swing.JTextArea textoEncriptadoTextArea;
+    private javax.swing.JTextArea resultadoTextArea;
+    private javax.swing.JTextArea rutaTextArea;
     // End of variables declaration//GEN-END:variables
 }

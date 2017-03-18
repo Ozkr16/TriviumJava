@@ -83,7 +83,9 @@ public class Util {
             }
             index++;
             if(index % LETTER_BIT_WIDTH == 0){
-                bytes[(index / 8) - 1] = (byte)asciiValue;
+                byte b = (byte) asciiValue;
+                int i2 = b & 0xFF;
+                bytes[(index / 8) - 1] = (byte) i2;
                 asciiValue = 0;
             }
         }
