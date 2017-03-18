@@ -15,6 +15,9 @@
  */
 package cenfotec.mseg02;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  *
  * @author ozkr16
@@ -56,6 +59,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         IVTextField = new javax.swing.JTextField();
         resetButton = new javax.swing.JButton();
+        bitsToBinaryButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(975, 350));
@@ -109,6 +113,13 @@ public class TriviumUIMain extends javax.swing.JFrame {
             }
         });
 
+        bitsToBinaryButton.setText("Bits to Binary");
+        bitsToBinaryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bitsToBinaryButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -136,7 +147,8 @@ public class TriviumUIMain extends javax.swing.JFrame {
                             .addComponent(desencriptarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())))))
+                                .addContainerGap())
+                            .addComponent(bitsToBinaryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,9 +164,12 @@ public class TriviumUIMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(encriptarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(encriptarButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bitsToBinaryButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -190,7 +205,8 @@ public class TriviumUIMain extends javax.swing.JFrame {
     private void desencriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desencriptarButtonActionPerformed
         String encryptedTextFilePath = this.textoEncriptadoTextArea.getText();
         if(encryptedTextFilePath != null){
-            textPlanoTextArea.setText(trivium.decrypt(encryptedTextFilePath, this.claveTextField.getText(), this.IVTextField.getText()));
+            String textoPlano = trivium.decrypt(encryptedTextFilePath, this.claveTextField.getText(), this.IVTextField.getText(), ".plane.txt");
+            textPlanoTextArea.setText(textoPlano);
         }
     }//GEN-LAST:event_desencriptarButtonActionPerformed
 
@@ -201,7 +217,8 @@ public class TriviumUIMain extends javax.swing.JFrame {
     private void encriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encriptarButtonActionPerformed
         String planeTextFilePath = this.textPlanoTextArea.getText();
         if(planeTextFilePath != null){
-            textoEncriptadoTextArea.setText(trivium.encrypt(planeTextFilePath, this.claveTextField.getText(), this.IVTextField.getText()));
+            String textoEncryptado = trivium.encrypt(planeTextFilePath, this.claveTextField.getText(), this.IVTextField.getText(), ".encrypted.txt");
+            textoEncriptadoTextArea.setText(textoEncryptado);
         }
     }//GEN-LAST:event_encriptarButtonActionPerformed
 
@@ -209,6 +226,30 @@ public class TriviumUIMain extends javax.swing.JFrame {
         
         trivium = new TriviumController();
     }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void bitsToBinaryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitsToBinaryButtonActionPerformed
+        try{
+            String planeTextFilePath = this.textPlanoTextArea.getText();
+            if(planeTextFilePath != null){
+                Paths.get(planeTextFilePath);
+                byte[] data = Files.readAllBytes(Paths.get(planeTextFilePath));
+                
+                Boolean[] oneZeroArray = new Boolean[data.length];
+                int index = 0;
+                for (byte digit : data) {
+                    oneZeroArray[index] = ((int)digit == 49);
+                    ++index;
+                }
+                byte[] textoEncryptado = Util.ConvertBitArrayToBytes(oneZeroArray);
+                
+                Files.write(Paths.get(planeTextFilePath + ".binary.txt"), textoEncryptado);
+                String textoVisible = Files.readAllBytes(Paths.get(planeTextFilePath + ".binary.txt")).toString();
+                textoEncriptadoTextArea.setText(textoVisible);
+            }
+        }catch(Exception ex){
+            textoEncriptadoTextArea.setText(ex.toString());
+        }
+    }//GEN-LAST:event_bitsToBinaryButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,6 +289,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField IVTextField;
+    private javax.swing.JButton bitsToBinaryButton;
     private javax.swing.JTextField claveTextField;
     private javax.swing.JButton desencriptarButton;
     private javax.swing.JButton encriptarButton;

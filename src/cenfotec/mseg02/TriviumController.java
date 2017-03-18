@@ -51,49 +51,32 @@ public class TriviumController {
         bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
     }
     
-    public String encrypt(String planeTextFilePathString, String key, String iv){
+    public String encrypt(String filePath, String key, String iv, String outputFileExtension){
         
         try{
             rebuildBitGeneratorWith(key, iv);
             
-            Paths.get(planeTextFilePathString);
-            byte[] data = Files.readAllBytes(Paths.get(planeTextFilePathString));
+            Paths.get(filePath);
+            byte[] data = Files.readAllBytes(Paths.get(filePath));
             
             Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
             Boolean[] encryptedData = new Boolean[dataBits.length];
             for(int i = 0; i < dataBits.length; i++){
-                encryptedData[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
+                Boolean randomBit = this.bitGenerator.getNextRandomBit();
+                encryptedData[i] = Util.XOR(dataBits[i], randomBit);
             }
-            String result = Util.ConvertBitArrayToString(encryptedData);
-            Files.write(Paths.get(planeTextFilePathString + ".encrypted"), result.getBytes(), StandardOpenOption.CREATE);
+            byte[] result = Util.ConvertBitArrayToBytes(encryptedData);
+            Files.write(Paths.get(filePath + outputFileExtension), result);
             
-            return result;
+            return Files.readAllBytes(Paths.get(filePath)).toString();
         }catch(Exception ex){
             return ex.toString();
         }
     }
     
-    public String decrypt(String encryptedFilePath, String key, String iv){
-        
-           try{
-            rebuildBitGeneratorWith(key, iv);
-            
-            Paths.get(encryptedFilePath);
-            byte[] data = Files.readAllBytes(Paths.get(encryptedFilePath));
-            
-            Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
-            Boolean[] planeText = new Boolean[dataBits.length];
-            for(int i = 0; i < dataBits.length; i++){
-                planeText[i] = Util.XOR(dataBits[i], this.bitGenerator.getNextRandomBit());
-            }
-            
-            String result = Util.ConvertBitArrayToString(planeText);
-       
-            Files.write(Paths.get(encryptedFilePath + ".plane"), result.getBytes(), StandardOpenOption.CREATE);
-            
-            return result;
-        }catch(Exception ex){
-            return ex.toString();
-        }
+    public String decrypt(String filePath, String key, String iv,String outputFileExtension){
+        //The decryption operation is exactly the same as the encryption operation, but using the encrypted data as input.
+        return this.encrypt(filePath, key, iv, outputFileExtension);
     }
+    
 }

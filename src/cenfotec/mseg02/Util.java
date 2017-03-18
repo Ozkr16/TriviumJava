@@ -72,22 +72,23 @@ public class Util {
         return output;
     }
     
-    public static String ConvertBitArrayToString(Boolean[] data){
+    public static byte[] ConvertBitArrayToBytes(Boolean[] data){
         int index = 0;
-        StringBuilder planeText = new StringBuilder();
+        byte[] bytes = new byte[data.length/8];
+        
         int asciiValue = 0;
         for (boolean item : data) {
             if(item){
-                asciiValue += Math.pow(2, LETTER_BIT_WIDTH - (index  % LETTER_BIT_WIDTH));
+                asciiValue += Math.pow(2, LETTER_BIT_WIDTH - (index  % LETTER_BIT_WIDTH) -1);
             }
             index++;
             if(index % LETTER_BIT_WIDTH == 0){
-                planeText.append((char)asciiValue);
+                bytes[(index / 8) - 1] = (byte)asciiValue;
                 asciiValue = 0;
             }
         }
  
-        return planeText.toString();
+        return bytes;
     }
     
     public static String PrintableStringFrom(Boolean[] array){
