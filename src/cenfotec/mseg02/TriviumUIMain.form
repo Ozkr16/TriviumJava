@@ -81,8 +81,8 @@
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="IVTextField" min="-2" pref="180" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="261" max="-2" attributes="0"/>
-                          <Component id="resetButton" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
+                          <Component id="hexaDecryptButton" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
                           <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+                  <EmptySpace pref="88" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -112,7 +112,7 @@
                           <Component id="claveTextField" alignment="3" max="32767" attributes="0"/>
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="IVTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="resetButton" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="hexaDecryptButton" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel4" max="32767" attributes="0"/>
                   </Group>
@@ -209,12 +209,12 @@
         </Component>
         <Component class="javax.swing.JTextField" name="IVTextField">
         </Component>
-        <Component class="javax.swing.JButton" name="resetButton">
+        <Component class="javax.swing.JButton" name="hexaDecryptButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Reset"/>
+            <Property name="text" type="java.lang.String" value="Desencriptar Hexa"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hexaDecryptButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bitsToBinaryButton">

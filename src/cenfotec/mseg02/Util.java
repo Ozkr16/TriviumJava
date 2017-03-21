@@ -15,11 +15,13 @@
  */
 package cenfotec.mseg02;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.Scanner;
 
 /**
  *
@@ -125,11 +127,25 @@ public class Util {
         }
     }
     
-    public static String BytesToHexa(byte[] data){
+    public static String ReadFileAsString(String planeTextFilePath) throws IOException, IllegalArgumentException {
+        return new Scanner(new File(planeTextFilePath)).useDelimiter("\\Z").next();
+    }
+    
+    public static String BytesToHexString(byte[] data){
         StringBuilder sb = new StringBuilder();
         for (byte b : data) {
             sb.append(String.format("%02X", b));
         }
         return sb.toString();
+    }
+    
+    public static byte[] HexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                                 + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
     }
 }

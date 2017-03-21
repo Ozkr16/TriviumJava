@@ -57,7 +57,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
         claveTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         IVTextField = new javax.swing.JTextField();
-        resetButton = new javax.swing.JButton();
+        hexaDecryptButton = new javax.swing.JButton();
         bitsToBinaryButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -105,10 +105,10 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
         jLabel5.setText("Vector de Inicializacion");
 
-        resetButton.setText("Reset");
-        resetButton.addActionListener(new java.awt.event.ActionListener() {
+        hexaDecryptButton.setText("Desencriptar Hexa");
+        hexaDecryptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetButtonActionPerformed(evt);
+                hexaDecryptButtonActionPerformed(evt);
             }
         });
 
@@ -134,8 +134,8 @@ public class TriviumUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(IVTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(261, 261, 261)
-                        .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(179, 179, 179)
+                        .addComponent(hexaDecryptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel2)
                         .addComponent(jLabel3)
@@ -148,7 +148,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(desencriptarButton))
                         .addComponent(jScrollPane1)))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +159,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
                         .addComponent(claveTextField)
                         .addComponent(jLabel5)
                         .addComponent(IVTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(hexaDecryptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,7 +227,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
             byte[] encryptedData = trivium.encrypt(data, this.claveTextField.getText(), this.IVTextField.getText());
             
             Util.WriteContentsToFile(planeTextFilePath + ".encrypted.txt", encryptedData);
-            Util.WriteContentsToFile(planeTextFilePath + ".hexa.txt", Util.BytesToHexa(encryptedData));
+            Util.WriteContentsToFile(planeTextFilePath + ".hexa.txt", Util.BytesToHexString(encryptedData));
             
             resultadoTextArea.setText(new String(encryptedData));
         }catch(Exception ex){
@@ -236,10 +236,21 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
     }//GEN-LAST:event_encriptarButtonActionPerformed
 
-    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        
-        trivium = new TriviumController();
-    }//GEN-LAST:event_resetButtonActionPerformed
+    private void hexaDecryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hexaDecryptButtonActionPerformed
+        String encryptedTextFilePath = this.rutaTextArea.getText();
+        byte[] data;
+        try{
+            String hexString = Util.ReadFileAsString(encryptedTextFilePath);
+            data = Util.HexStringToByteArray(hexString);
+            byte[] encryptedData = trivium.decrypt(data, this.claveTextField.getText(), this.IVTextField.getText());
+            
+            Util.WriteContentsToFile(encryptedTextFilePath + ".hexplane.txt", encryptedData);
+            
+            resultadoTextArea.setText(new String(encryptedData));
+        }catch(Exception ex){
+            resultadoTextArea.setText(ex.toString());
+        }
+    }//GEN-LAST:event_hexaDecryptButtonActionPerformed
 
     private void bitsToBinaryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitsToBinaryButtonActionPerformed
         try{
@@ -306,6 +317,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
     private javax.swing.JTextField claveTextField;
     private javax.swing.JButton desencriptarButton;
     private javax.swing.JButton encriptarButton;
+    private javax.swing.JButton hexaDecryptButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -314,7 +326,6 @@ public class TriviumUIMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton resetButton;
     private javax.swing.JTextArea resultadoTextArea;
     private javax.swing.JTextArea rutaTextArea;
     // End of variables declaration//GEN-END:variables
