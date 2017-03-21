@@ -15,8 +15,7 @@
  */
 package cenfotec.mseg02;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 /**
  *
@@ -203,9 +202,16 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
     private void desencriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desencriptarButtonActionPerformed
         String encryptedTextFilePath = this.rutaTextArea.getText();
-        if(encryptedTextFilePath != null){
-            String textoPlano = trivium.decrypt(encryptedTextFilePath, this.claveTextField.getText(), this.IVTextField.getText(), ".plane.txt");
-            resultadoTextArea.setText(textoPlano);
+        byte[] data;
+        try{
+            data = Util.ReadFileContents(encryptedTextFilePath);
+            byte[] encryptedData = trivium.decrypt(data, this.claveTextField.getText(), this.IVTextField.getText());
+            
+            Util.WriteContentsToFile(encryptedTextFilePath + ".plane.txt", encryptedData);
+            
+            resultadoTextArea.setText(new String(encryptedData));
+        }catch(Exception ex){
+            resultadoTextArea.setText(ex.toString());
         }
     }//GEN-LAST:event_desencriptarButtonActionPerformed
 
@@ -215,10 +221,18 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
     private void encriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encriptarButtonActionPerformed
         String planeTextFilePath = this.rutaTextArea.getText();
-        if(planeTextFilePath != null){
-            String textoEncryptado = trivium.encrypt(planeTextFilePath, this.claveTextField.getText(), this.IVTextField.getText(), ".encrypted.txt");
-            resultadoTextArea.setText(textoEncryptado);
+        byte[] data;
+        try{
+            data = Util.ReadFileContents(planeTextFilePath);
+            byte[] encryptedData = trivium.encrypt(data, this.claveTextField.getText(), this.IVTextField.getText());
+            
+            Util.WriteContentsToFile(planeTextFilePath + ".encrypted.txt", encryptedData);
+            
+            resultadoTextArea.setText(new String(encryptedData));
+        }catch(Exception ex){
+            resultadoTextArea.setText(ex.toString());
         }
+
     }//GEN-LAST:event_encriptarButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed

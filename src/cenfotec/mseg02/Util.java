@@ -15,6 +15,9 @@
  */
 package cenfotec.mseg02;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
@@ -99,5 +102,19 @@ public class Util {
             printable.append((bit)?"1":"0");
         }
         return printable.toString();
+    }
+    
+    public static void WriteContentsToFile(String planeTextFilePath, byte[] encryptedData) throws IOException {
+        Files.write(Paths.get(planeTextFilePath), encryptedData);
+    }
+
+    public static byte[] ReadFileContents(String planeTextFilePath) throws IOException, IllegalArgumentException {
+        byte[] data;
+        if(planeTextFilePath != null){
+            data = Files.readAllBytes(Paths.get(planeTextFilePath));
+            return data;
+        }else{
+            throw new IllegalArgumentException("Filepath is invalid!");
+        }
     }
 }
