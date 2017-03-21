@@ -16,6 +16,7 @@
 package cenfotec.mseg02;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -107,6 +108,12 @@ public class Util {
     public static void WriteContentsToFile(String planeTextFilePath, byte[] encryptedData) throws IOException {
         Files.write(Paths.get(planeTextFilePath), encryptedData);
     }
+    
+    public static void WriteContentsToFile(String planeTextFilePath, String hexaString) throws IOException {
+        try(  PrintWriter out = new PrintWriter(planeTextFilePath)  ){
+            out.println( hexaString );
+        }
+    }
 
     public static byte[] ReadFileContents(String planeTextFilePath) throws IOException, IllegalArgumentException {
         byte[] data;
@@ -116,5 +123,13 @@ public class Util {
         }else{
             throw new IllegalArgumentException("Filepath is invalid!");
         }
+    }
+    
+    public static String BytesToHexa(byte[] data){
+        StringBuilder sb = new StringBuilder();
+        for (byte b : data) {
+            sb.append(String.format("%02X", b));
+        }
+        return sb.toString();
     }
 }

@@ -227,6 +227,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
             byte[] encryptedData = trivium.encrypt(data, this.claveTextField.getText(), this.IVTextField.getText());
             
             Util.WriteContentsToFile(planeTextFilePath + ".encrypted.txt", encryptedData);
+            Util.WriteContentsToFile(planeTextFilePath + ".hexa.txt", Util.BytesToHexa(encryptedData));
             
             resultadoTextArea.setText(new String(encryptedData));
         }catch(Exception ex){
