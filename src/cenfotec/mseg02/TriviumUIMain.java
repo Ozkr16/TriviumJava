@@ -206,8 +206,10 @@ public class TriviumUIMain extends javax.swing.JFrame {
         try{
             data = Util.ReadFileContents(encryptedTextFilePath);
             byte[] encryptedData = trivium.decrypt(data, this.claveTextField.getText(), this.IVTextField.getText());
+            byte[] encryptedDataAlt = trivium.decryptAlt(data, this.claveTextField.getText(), this.IVTextField.getText());
             
             Util.WriteContentsToFile(encryptedTextFilePath + ".plane.txt", encryptedData);
+            Util.WriteContentsToFile(encryptedTextFilePath + ".planeAlt.txt", encryptedDataAlt);
             
             resultadoTextArea.setText(new String(encryptedData));
         }catch(Exception ex){
@@ -225,8 +227,10 @@ public class TriviumUIMain extends javax.swing.JFrame {
         try{
             data = Util.ReadFileContents(planeTextFilePath);
             byte[] encryptedData = trivium.encrypt(data, this.claveTextField.getText(), this.IVTextField.getText());
+            byte[] encryptedDataAlt = trivium.encryptAlt(data, this.claveTextField.getText(), this.IVTextField.getText());
             
             Util.WriteContentsToFile(planeTextFilePath + ".encrypted.txt", encryptedData);
+            Util.WriteContentsToFile(planeTextFilePath + ".encryptedAlt.txt", encryptedDataAlt);
             Util.WriteContentsToFile(planeTextFilePath + ".hexa.txt", Util.BytesToHexString(encryptedData));
             
             resultadoTextArea.setText(new String(encryptedData));

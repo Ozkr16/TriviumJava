@@ -69,4 +69,24 @@ public class TriviumController {
         return this.encrypt(encryptedData, key, iv);
     }
     
+        public byte[] encryptAlt(byte[] data, String key, String iv){
+
+        rebuildBitGeneratorWith(key, iv);
+
+        Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
+        Boolean[] encryptedData = new Boolean[dataBits.length];
+        for(int i = 0; i < dataBits.length; i++){
+            Boolean randomBit = this.bitGenerator.getAlternateNextRandomBit();
+            encryptedData[i] = Util.XOR(dataBits[i], randomBit);
+        }
+        byte[] result = Util.ConvertBitArrayToBytes(encryptedData);
+
+        return result;
+    }
+    
+    public byte[] decryptAlt(byte[] encryptedData, String key, String iv){
+        //The decryption operation is exactly the same as the encryption operation, but using the encrypted data as input.
+        return this.encrypt(encryptedData, key, iv);
+    }
+    
 }
