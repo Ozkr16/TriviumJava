@@ -56,7 +56,7 @@ public class TriviumController {
         Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
         Boolean[] encryptedData = new Boolean[dataBits.length];
         for(int i = 0; i < dataBits.length; i++){
-            Boolean randomBit = this.bitGenerator.getNextRandomBit();
+            Boolean randomBit = this.bitGenerator.getAlternateNextRandomBit();
             encryptedData[i] = Util.XOR(dataBits[i], randomBit);
         }
         byte[] result = Util.ConvertBitArrayToBytes(encryptedData);

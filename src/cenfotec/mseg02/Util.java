@@ -148,4 +148,26 @@ public class Util {
         }
         return data;
     }
+    
+    public static Boolean[] InvertBitsInByte(Boolean[] booleanByte){
+        int dataLenght = booleanByte.length;
+        Boolean[] invertedBytes = new Boolean[dataLenght];
+        int index = 0;
+        for(boolean bit : booleanByte){
+            invertedBytes[dataLenght - index -1] = bit;
+            ++index;
+        }
+        return invertedBytes;
+    }
+    
+    public static Boolean[] ZeroOneStringToBooleanArray(String data){
+        char[] zeroOneChars = data.trim().replace(" ", "").toCharArray();
+        Boolean[] booleanResult = new Boolean[zeroOneChars.length];
+        int i = 0;
+        for(char bit : zeroOneChars){
+            booleanResult[i] = (bit == '1');
+            ++i;
+        }
+        return booleanResult;
+    }
 }
