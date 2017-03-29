@@ -28,21 +28,6 @@ public class TriviumController {
     
     private TriviumBitGenerator bitGenerator;
     
-    public TriviumController(){
-        for(int i = 0; i < KEY_SIZE; ++i ){
-            keyArray[i] = false;
-            ivArray[i] = false;
-        }
-        
-        bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
-    }
-
-    public TriviumController(Boolean[] key, Boolean[] iv){
-        this.keyArray = key;
-        this.ivArray = iv;
-        bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
-    }
-    
     public void rebuildBitGeneratorWith(Boolean[] key, Boolean[] iv){
         this.keyArray = key;
         this.ivArray = iv;

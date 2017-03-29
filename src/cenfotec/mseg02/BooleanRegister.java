@@ -47,15 +47,26 @@ class BooleanRegister {
         feedforwardOffset = ffOffset - 1; //To keep array math you should use zero based offsets.
     }
     
-    public Boolean shift(){
+    public Boolean shiftRight(){
         Boolean output = this.getOutput();
-        this.shiftRight();
+        this.internalShiftRight();
         return output;
     }
     
-    public void shiftRight(){
+    public Boolean shiftLeft(){
+        Boolean output = this.getOutput();
+        this.internalShiftLeft();
+        return output;
+    }
+    
+    public void internalShiftRight(){
         startIndex = (startIndex - 1 < 0)? registerSize-1 : startIndex -1;
         endIndex = (endIndex - 1 < 0)? registerSize-1 : endIndex -1;
+    }
+    
+    public void internalShiftLeft(){
+        startIndex = (startIndex + 1 >= registerSize)? 0 : startIndex +1;
+        endIndex = (endIndex + 1 >= registerSize)? 0 : endIndex +1;
     }
     
     public Boolean getFirstAndInputValue(){

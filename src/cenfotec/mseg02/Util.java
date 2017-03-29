@@ -39,25 +39,21 @@ public class Util {
         return !Objects.equals(A, B); //XOR basically returns true if the booleans are different (at least one will be true, but not both)
     }
     
-    public static Boolean[] ConvertStringToBitArray(String data){
-        byte[] bytes = data.getBytes();
-        StringBuilder binary = new StringBuilder();
-        for (byte b : bytes) {
-            int val = b;
-            for (int i = 0; i < 8; i++) {
-                binary.append((val & 128) == 0 ? 0 : 1);
-                val <<= 1;
-            } 
-        }
-        char[] binaryChars = binary.toString().toCharArray();
-        Boolean[] output = new Boolean[binaryChars.length];
-        int index = 0;
-        for (char digit : binaryChars) {
-            output[index] = (digit == '1');
-            ++index;
-        }
-        return output;
+ public static Boolean[] ConvertStringToBitArray(String data){
+    byte[] bytes = data.getBytes();
+    StringBuilder binary = new StringBuilder();
+    for (byte b : bytes)
+    {
+       int val = b;
+       for (int i = 0; i < 8; i++)
+       {
+          binary.append((val & 128) == 0 ? 0 : 1);
+          val <<= 1;
+       }
     }
+    return Util.ZeroOneStringToBooleanArray(binary.toString());  
+ }
+    
     
     public static Boolean[] ConvertBytesToBitArray(byte[] bytes){
         StringBuilder binary = new StringBuilder();

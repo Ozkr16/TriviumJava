@@ -293,6 +293,7 @@ public class TriviumUIMain extends javax.swing.JFrame {
             
             Boolean[] clave = Util.ConvertStringToBitArray(this.claveTextField.getText());
             Boolean[] iv = Util.ConvertStringToBitArray(this.IVTextField.getText());
+            String claveEnBinario = Util.PrintableStringFrom(clave);
             
             
             Boolean[] encryptedData = trivium.decrypt(data, clave, iv);
