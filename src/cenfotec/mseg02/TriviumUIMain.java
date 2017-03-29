@@ -79,6 +79,8 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
         rutaTextArea.setColumns(20);
         rutaTextArea.setRows(1);
+        rutaTextArea.setText("./td/bin.txt");
+        rutaTextArea.setToolTipText("");
         jScrollPane2.setViewportView(rutaTextArea);
 
         encriptarButton.setText("Encriptar");
@@ -97,6 +99,8 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
         jLabel4.setText("Clave:");
 
+        claveTextField.setText("prueba1234");
+        claveTextField.setToolTipText("");
         claveTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 claveTextFieldActionPerformed(evt);
@@ -104,6 +108,9 @@ public class TriviumUIMain extends javax.swing.JFrame {
         });
 
         jLabel5.setText("Vector de Inicializacion");
+
+        IVTextField.setText("vector1234");
+        IVTextField.setToolTipText("");
 
         hexaDecryptButton.setText("Desencriptar Hexa");
         hexaDecryptButton.addActionListener(new java.awt.event.ActionListener() {

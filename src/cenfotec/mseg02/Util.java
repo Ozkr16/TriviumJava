@@ -193,4 +193,22 @@ public class Util {
         }
         return booleanResult;
     }
+    
+    public static String BitArrayToString(Boolean[] asciiBinary){
+        int index = 0;
+        String message = "";
+        
+        int asciiValue = 0;
+        for (boolean item : asciiBinary) {
+            if(item){
+                asciiValue += Math.pow(2, LETTER_BIT_WIDTH - (index  % LETTER_BIT_WIDTH) -1);
+            }
+            index++;
+            if(index % LETTER_BIT_WIDTH == 0){
+                message += (char) asciiValue;
+                asciiValue = 0;
+            }
+        }
+        return message;
+    }
 }

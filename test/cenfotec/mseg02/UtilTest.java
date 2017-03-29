@@ -86,4 +86,13 @@ public class UtilTest {
         
         assertArrayEquals(input, actualResult);
     }
+    
+    @Test
+    public void testBitArrayToString() {
+        System.out.println("BitArrayToString");
+        Boolean[] input = new Boolean[]{false, true, false, false, false, false, false, true,false, true, false, false, false, false, true, false};
+        String actualResult = Util.BitArrayToString(input);
+        
+        assertTrue("AB".equals(actualResult));
+    }
 }

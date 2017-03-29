@@ -172,6 +172,8 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="1"/>
+                <Property name="text" type="java.lang.String" value="./td/bin.txt"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
           </SubComponents>
@@ -198,6 +200,10 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="claveTextField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="prueba1234"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="claveTextFieldActionPerformed"/>
           </Events>
@@ -208,6 +214,10 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="IVTextField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="vector1234"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="hexaDecryptButton">
           <Properties>
