@@ -60,6 +60,15 @@ public class UtilTest {
     }
     
     @Test
+    public void testInvertBytes() {
+        System.out.println("InvertBytes");
+        Boolean[] booleanByte = new Boolean[]{true, true, false, false, true, false, false, true,true, true, false, false, true, false, false, true};
+        Boolean[] expResult = new Boolean[]{true, false, false, true, false, false, true, true,true, false, false, true, false, false, true, true};
+        Boolean[] result = Util.InvertBytes(booleanByte);
+        assertArrayEquals(expResult, result);
+    }
+    
+    @Test
     public void testZeroOneStringToBooleanArray() {
         System.out.println("ZeroOneStringToBooleanArray");
         String input = "10100111";
@@ -74,6 +83,7 @@ public class UtilTest {
         Boolean[] input = new Boolean[]{true, false, true, false, false, true, true, true};
         byte[] partialResult = Util.ConvertBitArrayToBytes(input);
         Boolean[] actualResult = Util.ConvertBytesToBitArray(partialResult);
+        
         assertArrayEquals(input, actualResult);
     }
 }

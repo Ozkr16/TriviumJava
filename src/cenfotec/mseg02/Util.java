@@ -149,7 +149,7 @@ public class Util {
         return data;
     }
     
-    private static Boolean[] InvertBitsInByte(Boolean[] booleanByte){
+    public static Boolean[] InvertBitsInByte(Boolean[] booleanByte){
         int dataLenght = booleanByte.length;
         Boolean[] invertedBytes = new Boolean[dataLenght];
         int index = 0;
