@@ -37,54 +37,32 @@ public class TriviumController {
         bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
     }
 
-    public TriviumController(String key, String iv){
-        this.keyArray = Util.ConvertStringToBitArray(key);
-        this.ivArray = Util.ConvertStringToBitArray(iv);
+    public TriviumController(Boolean[] key, Boolean[] iv){
+        this.keyArray = key;
+        this.ivArray = iv;
         bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
     }
     
-    public void rebuildBitGeneratorWith(String key, String iv){
-        this.keyArray = Util.ConvertStringToBitArray(key);
-        this.ivArray = Util.ConvertStringToBitArray(iv);
+    public void rebuildBitGeneratorWith(Boolean[] key, Boolean[] iv){
+        this.keyArray = key;
+        this.ivArray = iv;
         bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
     }
     
-    public byte[] encrypt(byte[] data, String key, String iv){
+    public Boolean[] encrypt(Boolean[] dataBits, Boolean[] key, Boolean[] iv){
 
         rebuildBitGeneratorWith(key, iv);
-
-        Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
+        
         Boolean[] encryptedData = new Boolean[dataBits.length];
         for(int i = 0; i < dataBits.length; i++){
             Boolean randomBit = this.bitGenerator.getAlternateNextRandomBit();
             encryptedData[i] = Util.XOR(dataBits[i], randomBit);
         }
-        byte[] result = Util.ConvertBitArrayToBytes(encryptedData);
-
-        return result;
+        
+        return encryptedData;
     }
     
-    public byte[] decrypt(byte[] encryptedData, String key, String iv){
-        //The decryption operation is exactly the same as the encryption operation, but using the encrypted data as input.
-        return this.encrypt(encryptedData, key, iv);
-    }
-    
-        public byte[] encryptAlt(byte[] data, String key, String iv){
-
-        rebuildBitGeneratorWith(key, iv);
-
-        Boolean[] dataBits = Util.ConvertBytesToBitArray(data);
-        Boolean[] encryptedData = new Boolean[dataBits.length];
-        for(int i = 0; i < dataBits.length; i++){
-            Boolean randomBit = this.bitGenerator.getAlternateNextRandomBit();
-            encryptedData[i] = Util.XOR(dataBits[i], randomBit);
-        }
-        byte[] result = Util.ConvertBitArrayToBytes(encryptedData);
-
-        return result;
-    }
-    
-    public byte[] decryptAlt(byte[] encryptedData, String key, String iv){
+    public Boolean[] decrypt(Boolean[] encryptedData, Boolean[] key, Boolean[] iv){
         //The decryption operation is exactly the same as the encryption operation, but using the encrypted data as input.
         return this.encrypt(encryptedData, key, iv);
     }

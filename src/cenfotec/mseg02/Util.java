@@ -149,7 +149,7 @@ public class Util {
         return data;
     }
     
-    public static Boolean[] InvertBitsInByte(Boolean[] booleanByte){
+    private static Boolean[] InvertBitsInByte(Boolean[] booleanByte){
         int dataLenght = booleanByte.length;
         Boolean[] invertedBytes = new Boolean[dataLenght];
         int index = 0;
@@ -158,6 +158,29 @@ public class Util {
             ++index;
         }
         return invertedBytes;
+    }
+    
+    public static Boolean[] InvertBytes(Boolean[] dataToInvert){
+        Boolean[] fakeByte = new Boolean[8];
+        Boolean[] result = new Boolean[dataToInvert.length];
+        Boolean[] fakeByteReversed; 
+        int k = 0;
+        for(int i = 0; i <= dataToInvert.length; ++i){
+            if(i % 8 == 0 && i != 0){
+                fakeByteReversed = InvertBitsInByte(fakeByte);
+                int positionWhithinByte = 0;
+                for(Boolean bit : fakeByteReversed){
+                    result[k*8 + positionWhithinByte] = bit;
+                    ++positionWhithinByte;
+                }
+                fakeByteReversed = null;
+                ++k;
+            }
+            if(i < dataToInvert.length){
+                fakeByte[(i % 8)] = dataToInvert[i];
+            }
+        }
+        return result;
     }
     
     public static Boolean[] ZeroOneStringToBooleanArray(String data){
