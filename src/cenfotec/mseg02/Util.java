@@ -111,9 +111,9 @@ public class Util {
         Files.write(Paths.get(planeTextFilePath), encryptedData);
     }
     
-    public static void WriteContentsToFile(String planeTextFilePath, String hexaString) throws IOException {
+    public static void WriteContentsToFile(String planeTextFilePath, String messageData) throws IOException {
         try(  PrintWriter out = new PrintWriter(planeTextFilePath)  ){
-            out.println( hexaString );
+            out.println( messageData );
         }
     }
 

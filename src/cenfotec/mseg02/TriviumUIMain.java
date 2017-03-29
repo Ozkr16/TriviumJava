@@ -209,29 +209,23 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
     private void desencriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desencriptarButtonActionPerformed
         String encryptedTextFilePath = this.rutaTextArea.getText();
-        byte[] data;
+        String data;
         try{
-            data = Util.ReadFileContents(encryptedTextFilePath);
-            Boolean[] input = Util.ConvertBytesToBitArray(data);
-            Boolean[] inputInverted = Util.InvertBytes(Util.ConvertBytesToBitArray(data));
+            data = Util.ReadFileAsString(encryptedTextFilePath);
+            Boolean[] input = Util.ConvertStringToBitArray(data);
             
             Boolean[] clave = Util.ConvertStringToBitArray(this.claveTextField.getText());
             Boolean[] iv = Util.ConvertStringToBitArray(this.IVTextField.getText());
             
-            Boolean[] claveInverted = Util.InvertBytes(clave);
-            Boolean[] ivInverted = Util.InvertBytes(iv);
-            
             Boolean[] encryptedData = trivium.decrypt(input, clave, iv);
-            Boolean[] encryptedDataInverted = trivium.decrypt(inputInverted, claveInverted, ivInverted);
+
             
-            byte[] dataBytes = Util.ConvertBitArrayToBytes(encryptedData);
-            byte[] dataBytesInverted = Util.ConvertBitArrayToBytes(encryptedDataInverted);
-            byte[] dataBytesInvertedOutputInverted = Util.ConvertBitArrayToBytes(Util.InvertBytes(encryptedDataInverted));
+            String dataBytes = Util.BitArrayToString(encryptedData);
+            String dataBytesInverted = Util.BitArrayToString(Util.InvertBytes(encryptedData));
             Util.WriteContentsToFile(encryptedTextFilePath + ".plane.txt", dataBytes);
             Util.WriteContentsToFile(encryptedTextFilePath + ".planeInverted.txt", dataBytesInverted);
-            Util.WriteContentsToFile(encryptedTextFilePath + ".encryptedInvertedOutputInverted.txt", dataBytesInvertedOutputInverted);
             
-            resultadoTextArea.setText(new String(dataBytes));
+            resultadoTextArea.setText(dataBytes);
         }catch(Exception ex){
             resultadoTextArea.setText(ex.toString());
         }
@@ -247,26 +241,21 @@ public class TriviumUIMain extends javax.swing.JFrame {
         try{
             data = Util.ReadFileContents(planeTextFilePath);
             Boolean[] input = Util.ConvertBytesToBitArray(data);
-            Boolean[] inputInverted = Util.InvertBytes(Util.ConvertBytesToBitArray(data));
             
             Boolean[] clave = Util.ConvertStringToBitArray(this.claveTextField.getText());
             Boolean[] iv = Util.ConvertStringToBitArray(this.IVTextField.getText());
-            
-            Boolean[] claveInverted = Util.InvertBytes(clave);
-            Boolean[] ivInverted = Util.InvertBytes(iv);
-            
+           
             Boolean[] encryptedData = trivium.encrypt(input, clave, iv);
-            Boolean[] encryptedDataInverted = trivium.encrypt(inputInverted, claveInverted, ivInverted);
-            byte[] outputData = Util.ConvertBitArrayToBytes(encryptedData);
-            byte[] outputDataInverted = Util.ConvertBitArrayToBytes(encryptedDataInverted);
-            byte[] outputDataInvertedOutput = Util.ConvertBitArrayToBytes(Util.InvertBytes(encryptedDataInverted));
+
+            String outputData = Util.BitArrayToString(encryptedData);
+            String outputDataInverted = Util.BitArrayToString(Util.InvertBytes(encryptedData));
             Util.WriteContentsToFile(planeTextFilePath + ".encrypted.txt", outputData);
             Util.WriteContentsToFile(planeTextFilePath + ".encryptedInverted.txt", outputDataInverted);
-            Util.WriteContentsToFile(planeTextFilePath + ".encryptedInvertedOutputInverted.txt", outputDataInvertedOutput);
-            Util.WriteContentsToFile(planeTextFilePath + ".hexa.txt", Util.BytesToHexString(outputData));
-            Util.WriteContentsToFile(planeTextFilePath + ".binary.txt", Util.PrintableStringFrom(Util.ConvertBytesToBitArray(outputData)));
+
+            //Util.WriteContentsToFile(planeTextFilePath + ".hexa.txt", Util.BytesToHexString(outputData));
+            Util.WriteContentsToFile(planeTextFilePath + ".binary.txt", Util.PrintableStringFrom(encryptedData));
             
-            resultadoTextArea.setText(new String(outputData));
+            resultadoTextArea.setText(outputData);
         }catch(Exception ex){
             resultadoTextArea.setText(ex.toString());
         }
@@ -299,16 +288,14 @@ public class TriviumUIMain extends javax.swing.JFrame {
         Boolean[] data;
         String inputText;
         try{
-            //data = Util.ReadFileContents(planeTextFilePath);
             inputText = Util.ReadFileAsString(encryptedTextFilePath);
             data = Util.ZeroOneStringToBooleanArray(inputText);
-            Boolean[] input = Util.InvertBytes(data);
             
             Boolean[] clave = Util.ConvertStringToBitArray(this.claveTextField.getText());
             Boolean[] iv = Util.ConvertStringToBitArray(this.IVTextField.getText());
             
             
-            Boolean[] encryptedData = trivium.decrypt(input, clave, iv);
+            Boolean[] encryptedData = trivium.decrypt(data, clave, iv);
             byte[] dataBytes = Util.ConvertBitArrayToBytes(encryptedData);
             byte[] dataBytesInverted = Util.ConvertBitArrayToBytes(Util.InvertBytes(encryptedData));
             Util.WriteContentsToFile(encryptedTextFilePath + ".plane.txt", dataBytes);
