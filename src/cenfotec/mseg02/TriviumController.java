@@ -40,7 +40,7 @@ public class TriviumController {
         
         Boolean[] encryptedData = new Boolean[dataBits.length];
         for(int i = 0; i < dataBits.length; i++){
-            Boolean randomBit = this.bitGenerator.getAlternateNextRandomBit();
+            Boolean randomBit = this.bitGenerator.getNextRandomBit();
             encryptedData[i] = Util.XOR(dataBits[i], randomBit);
         }
         

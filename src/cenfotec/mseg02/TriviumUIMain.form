@@ -81,10 +81,8 @@
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="IVTextField" min="-2" pref="180" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
-                          <Component id="hexaDecryptButton" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -93,10 +91,8 @@
                               <Component id="encriptarButton" min="-2" pref="131" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="binaryDecriptButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="desencriptarButton" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" min="-2" pref="946" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="88" max="32767" attributes="0"/>
@@ -112,9 +108,8 @@
                           <Component id="claveTextField" alignment="3" max="32767" attributes="0"/>
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="IVTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="hexaDecryptButton" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jLabel4" max="32767" attributes="0"/>
+                      <Component id="jLabel4" pref="27" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" pref="16" max="-2" attributes="0"/>
@@ -124,7 +119,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="encriptarButton" alignment="3" max="32767" attributes="0"/>
                           <Component id="binaryDecriptButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="desencriptarButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -151,6 +145,7 @@
             <Component class="javax.swing.JTextArea" name="resultadoTextArea">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
+                <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
             </Component>
@@ -186,14 +181,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="encriptarButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="desencriptarButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Desencriptar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="desencriptarButtonActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clave:"/>
@@ -204,9 +191,6 @@
             <Property name="text" type="java.lang.String" value="prueba1234"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="claveTextFieldActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -219,17 +203,10 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="hexaDecryptButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Desencriptar Hexa"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hexaDecryptButtonActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="binaryDecriptButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Desencriptar Binario"/>
+            <Property name="text" type="java.lang.String" value="Desencriptar"/>
+            <Property name="actionCommand" type="java.lang.String" value="Desencriptar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="binaryDecriptButtonActionPerformed"/>

@@ -91,34 +91,7 @@ public class TriviumBitGenerator {
         warmUpBitGeneratorEngine();
     }
     
-//    public Boolean getNextRandomBit(){
-//        
-//        Boolean regAAndResult = regA.getFirstAndInputValue() && regA.getSecondAndInputValue();
-//        Boolean regBAndResult = regB.getFirstAndInputValue() && regB.getSecondAndInputValue();
-//        Boolean regCAndResult = regC.getFirstAndInputValue() && regC.getSecondAndInputValue(); 
-//        
-//        Boolean regAFinalOutput = Util.XOR(Util.XOR(regA.getOutput(), regA.getFeedforwardOffset()), regAAndResult);
-//        Boolean regBFinalOutput = Util.XOR(Util.XOR(regB.getOutput(), regB.getFeedforwardOffset()), regBAndResult);
-//        Boolean regCFinalOutput = Util.XOR(Util.XOR(regC.getOutput(), regC.getFeedforwardOffset()), regCAndResult);
-//        
-//        Boolean zOutput = Util.XOR(Util.XOR(regAFinalOutput, regBFinalOutput), regCFinalOutput);
-//        
-//        Boolean regBInput = Util.XOR(regAFinalOutput, regB.getFeedbackOffset());
-//        Boolean regCInput = Util.XOR(regBFinalOutput, regC.getFeedbackOffset());
-//        Boolean regAInput = Util.XOR(regCFinalOutput, regA.getFeedbackOffset());
-//        
-//        regA.shift();
-//        regB.shift();
-//        regC.shift();
-//        
-//        regA.pushInput(regAInput);
-//        regB.pushInput(regBInput);
-//        regC.pushInput(regCInput);
-//        
-//        return zOutput;
-//    }
-    
-    public Boolean getAlternateNextRandomBit(){
+    public Boolean getNextRandomBit(){
         
         Boolean outA = regA.getOutput();
         Boolean ffA = regA.getFeedforwardOffset();
@@ -142,12 +115,9 @@ public class TriviumBitGenerator {
         Boolean regCInput = Util.XOR(Util.XOR(regBFinalOutput, regBAndResult), regC.getFeedbackOffset());
         Boolean regAInput = Util.XOR(Util.XOR(regCFinalOutput, regCAndResult), regA.getFeedbackOffset());
         
-        regA.shiftRight();
-        regB.shiftRight();
-        regC.shiftRight();
-//        regA.shiftLeft();
-//        regB.shiftLeft();
-//        regC.shiftLeft();
+        regA.shift();
+        regB.shift();
+        regC.shift();
         
         regA.pushInput(regAInput);
         regB.pushInput(regBInput);
@@ -186,9 +156,8 @@ public class TriviumBitGenerator {
     }
     
     private void warmUpBitGeneratorEngine(){
-        Boolean ignoredValue;
         for(int i = 0; i < INITIALIZATION_ROUNDS; ++i){
-            ignoredValue = this.getAlternateNextRandomBit(); //Ignore the first rounds to warm up the algorithm.
+            this.getNextRandomBit(); //Ignore the first rounds to warm up the algorithm.
         }
     }
 }
