@@ -16,7 +16,9 @@
 package cenfotec.mseg02;
 
 /**
- *
+ * Clase que representa un registro de bits. Los shifs son logicos, por lo que 
+ * los datos no se mueven dentro de storage. Solamente se utilizan indices para
+ * indicar el inicio y fin del registro.
  * @author ozkr16
  */
 class BooleanRegister {
@@ -27,6 +29,12 @@ class BooleanRegister {
     private final int feedforwardOffset;
     private Boolean[] storage;
     
+    /**
+     * Inicializa el registro con los datos proveidos. 
+     * @param regSize Tamaño del registro.
+     * @param ffOffset Desde el principio, cuantas posiciones hacia la derecha para alcanzar la posicion de feedfordward
+     * @param fbOffset Desde el principio, cuantas posiciones hacia la derecha para alcanzar la posicion de feedback.
+     */
     public BooleanRegister(int regSize, int ffOffset, int fbOffset) {
         if( regSize < 3){
             throw new IllegalArgumentException("Register size cannot be less than 3.");
@@ -47,6 +55,10 @@ class BooleanRegister {
         feedforwardOffset = ffOffset - 1; //To keep array math you should use zero based offsets.
     }
     
+    /**
+     * Causa un shift logico hacia la derecha. Retorna el valor de salida.
+     * @return 
+     */
     public Boolean shift(){
         Boolean output = this.getOutput();
         this.internalShiftRight();

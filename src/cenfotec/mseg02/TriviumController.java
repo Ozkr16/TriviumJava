@@ -16,29 +16,37 @@
 package cenfotec.mseg02;
 
 /**
- *
+ * Controlador del algoritmo de Trivium. Recibe las llamadas para encriptar y desencriptar datos.
  * @author ozkr16
  */
 public class TriviumController {
-    private final int KEY_SIZE = 80;
-    private final int IV_SIZE = 80;
     
-    private Boolean[] keyArray = new Boolean[KEY_SIZE];
-    private Boolean[] ivArray = new Boolean[IV_SIZE];
+    private TriviumBitGenerator bitGenerator; //Instancia del generador de bits aleatorios. 
     
-    private TriviumBitGenerator bitGenerator;
-    
-    public void rebuildBitGeneratorWith(Boolean[] key, Boolean[] iv){
-        this.keyArray = key;
-        this.ivArray = iv;
-        bitGenerator = new TriviumBitGenerator(keyArray, ivArray);
+    /**
+     * Reconstruye el generador de bits utilizando la llave y vector de inicializacion. 
+     * @param key Llave como cadena de bits (booleanos). Debe ser de 80 bits.
+     * @param iv Vector de inicializacion como cadena de bits (booleanos). Debe ser de 80 bits.
+     */
+    private void rebuildBitGeneratorWith(Boolean[] key, Boolean[] iv){
+        bitGenerator = new TriviumBitGenerator(key, iv);
     }
     
+    /**
+     * Encripta los bits que recibe con la llave y el vector recibidos utilizando Trivium.
+     * @param dataBits Bits de datos a encriptar como cadena de bits (booleanos)
+     * @param key Llave como cadena de bits (booleanos). Debe ser de 80 bits.
+     * @param iv Vector de inicializacion como cadena de bits (booleanos). Debe ser de 80 bits.
+     * @return Los datos encriptados.
+     */
     public Boolean[] encrypt(Boolean[] dataBits, Boolean[] key, Boolean[] iv){
 
+        //Primero reconstruya los registros para la nueva encripcion. 
         rebuildBitGeneratorWith(key, iv);
         
-        Boolean[] encryptedData = new Boolean[dataBits.length];
+        Boolean[] encryptedData = new Boolean[dataBits.length]; //Objeto de salida que contendra el resultado de la encripcion. 
+        
+        //Para cada bit de datos genere un bit random usando Trivium y aplique XOR para encriptar.
         for(int i = 0; i < dataBits.length; i++){
             Boolean randomBit = this.bitGenerator.getNextRandomBit();
             encryptedData[i] = Util.XOR(dataBits[i], randomBit);
@@ -47,8 +55,16 @@ public class TriviumController {
         return encryptedData;
     }
     
+    /**
+     * Desencripta los bits que recibe con la llave y el vector recibidos utilizando Trivium.
+     * @param encryptedData Bits de datos a desencriptar como cadena de bits (booleanos)
+     * @param key Llave como cadena de bits (booleanos). Debe ser de 80 bits.
+     * @param iv Vector de inicializacion como cadena de bits (booleanos). Debe ser de 80 bits.
+     * @return Los datos desencriptados.
+     */
     public Boolean[] decrypt(Boolean[] encryptedData, Boolean[] key, Boolean[] iv){
-        //The decryption operation is exactly the same as the encryption operation, but using the encrypted data as input.
+        //La desencripcion es exactamente lo mismo que la encripcion, pero usando los datos encriptados como entrada.
+        //Esto es asi porque el XOR es una operacion invertible. 
         return this.encrypt(encryptedData, key, iv);
     }
     

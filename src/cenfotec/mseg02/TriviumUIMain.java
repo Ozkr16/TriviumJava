@@ -179,23 +179,31 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Responde al boton de encriptar y produce un archivo encriptado con el mismo nombre al plano mas la extension ".encrypted.txt"
+     * @param evt 
+     */
     private void encriptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encriptarButtonActionPerformed
+        //Obtiene la ruta del archivo que indica la interfaz
         String planeTextFilePath = this.rutaTextArea.getText();
         byte[] data;
         try{
+            //Lee los datos a encriptar.
             data = Util.ReadFileContents(planeTextFilePath);
             Boolean[] input = Util.ConvertBytesToBitArray(data);
             
+            //Obtiene llave y vector desde UI.
             Boolean[] clave = Util.ConvertStringToBitArray(this.claveTextField.getText());
             Boolean[] iv = Util.ConvertStringToBitArray(this.IVTextField.getText());
            
+            //Llama al controlador de Trivium para encriptar con los datos proveidos.
             Boolean[] encryptedData = trivium.encrypt(input, clave, iv);
 
-            String outputData = Util.BitArrayToString(encryptedData);
+            //Escribe el resultado en un archivo.
             String printableBits = Util.PrintableStringFrom(encryptedData);
             Util.WriteContentsToFile(planeTextFilePath + ".encrypted.txt", Util.PrintableStringFrom(encryptedData));
             
+            //Escribe el resultado en UI.
             resultadoTextArea.setText(printableBits);
         }catch(Exception ex){
             resultadoTextArea.setText(ex.toString());
@@ -203,21 +211,33 @@ public class TriviumUIMain extends javax.swing.JFrame {
 
     }//GEN-LAST:event_encriptarButtonActionPerformed
 
+    /**
+     * Responde al boton de desencriptar y produce un archivo plano con el mismo nombre al encriptado mas la extension ".plane.txt"
+     * @param evt 
+     */
     private void binaryDecriptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_binaryDecriptButtonActionPerformed
+        
+        //Obtiene la ruta del archivo que indica la interfaz
         String encryptedTextFilePath = this.rutaTextArea.getText();
         Boolean[] data;
         String inputText;
         try{
+            //Lee los datos a desencriptar.
             inputText = Util.ReadFileAsString(encryptedTextFilePath);
-            data = Util.ZeroOneStringToBooleanArray(inputText);
+            data = Util.ZeroOneStringToBooleanArray(inputText); //Transforma un string de 1 y 0 en Booleanos.
             
+            //Obtiene llave y vector desde UI.
             Boolean[] clave = Util.ConvertStringToBitArray(this.claveTextField.getText());
             Boolean[] iv = Util.ConvertStringToBitArray(this.IVTextField.getText());
             
+            //Llama al controlador de Trivium para desencriptar con los datos proveidos.
             Boolean[] encryptedData = trivium.decrypt(data, clave, iv);
+            
+            //Convierte la salida en datos para escribirlo a archivos.
             byte[] dataBytes = Util.ConvertBitArrayToBytes(encryptedData);
             Util.WriteContentsToFile(encryptedTextFilePath + ".plane.txt", dataBytes);
             
+            //Escribe el mismo resultado en UI.
             resultadoTextArea.setText(new String(dataBytes));
         }catch(Exception ex){
             resultadoTextArea.setText(ex.toString());

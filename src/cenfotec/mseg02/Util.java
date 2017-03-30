@@ -24,14 +24,19 @@ import java.util.Objects;
 import java.util.Scanner;
 
 /**
- *
+ * Clase de utilidades que funcionan en diferentes capas del programa. 
  * @author ozkr16
  */
 public class Util {
 
     private final static int LETTER_BIT_WIDTH = 8;
 
-//Cannot believe Java does not support operator overloading. 
+    /**
+     * Java no soporta sobrecarga de operadores. Calcula XOR entre 2 booleanos.
+     * @param A Entrada 1
+     * @param B Entrada 2
+     * @return XOR entre ambas entradas.
+     */
     public static Boolean XOR(Boolean A, Boolean B){
         if(A == null || B == null){
             throw new IllegalArgumentException("Null value provided in XOR comparition.");
@@ -39,21 +44,22 @@ public class Util {
         return !Objects.equals(A, B); //XOR basically returns true if the booleans are different (at least one will be true, but not both)
     }
     
- public static Boolean[] ConvertStringToBitArray(String data){
-    byte[] bytes = data.getBytes();
-    StringBuilder binary = new StringBuilder();
-    for (byte b : bytes)
-    {
-       int val = b;
-       for (int i = 0; i < 8; i++)
-       {
-          binary.append((val & 128) == 0 ? 0 : 1);
-          val <<= 1;
-       }
-    }
-    return Util.ZeroOneStringToBooleanArray(binary.toString());  
- }
     
+    public static Boolean[] ConvertStringToBitArray(String data){
+       byte[] bytes = data.getBytes();
+       StringBuilder binary = new StringBuilder();
+       for (byte b : bytes)
+       {
+          int val = b;
+          for (int i = 0; i < 8; i++)
+          {
+             binary.append((val & 128) == 0 ? 0 : 1);
+             val <<= 1;
+          }
+       }
+       return Util.ZeroOneStringToBooleanArray(binary.toString());  
+    }
+
     
     public static Boolean[] ConvertBytesToBitArray(byte[] bytes){
         StringBuilder binary = new StringBuilder();
